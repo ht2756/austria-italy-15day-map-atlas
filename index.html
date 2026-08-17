@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="2027年6月奥地利与意大利北部15日公共交通旅行地图册">
+  <meta name="description" content="2027年6月奥地利与意大利北部15日公共交通旅行地图册，含每日地图、沿途窗口解说与完整专业导游底稿">
   <title>奥地利 × 意大利北部｜15日旅行地图册</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,31 +138,22 @@
             <header class="guide-heading">
               <div>
                 <p class="eyebrow">LOCAL GUIDE BRIEFING</p>
-                <h4 id="guide-heading">专业导游解说</h4>
+                <h4 id="guide-heading">专业导游解说 · 完整版</h4>
               </div>
-              <p class="guide-theme" id="guide-theme"></p>
+              <div class="guide-heading-side">
+                <p class="guide-theme" id="guide-theme"></p>
+                <span class="guide-runtime" id="guide-runtime"></span>
+              </div>
             </header>
             <blockquote class="guide-script" id="guide-script"></blockquote>
-            <div class="guide-lenses">
-              <article class="guide-lens">
-                <span>01 · SIGHTS</span>
-                <h5>景点怎么看</h5>
-                <p id="guide-sights"></p>
-              </article>
-              <article class="guide-lens">
-                <span>02 · FOOD</span>
-                <h5>当天吃什么</h5>
-                <p id="guide-food"></p>
-              </article>
-              <article class="guide-lens">
-                <span>03 · CULTURE</span>
-                <h5>人文怎么懂</h5>
-                <p id="guide-culture"></p>
-              </article>
-            </div>
+            <div class="guide-chapters" id="guide-chapters"></div>
             <div class="guide-field-note">
-              <span>现场讲法</span>
-              <p id="guide-field-note"></p>
+              <span>带团顺序</span>
+              <ol id="guide-field-notes"></ol>
+            </div>
+            <div class="guide-closing">
+              <span>当天收束词</span>
+              <p id="guide-closing"></p>
             </div>
             <div class="guide-source-row" id="guide-sources"></div>
           </section>
@@ -226,6 +217,7 @@
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="atlas-data.js"></script>
+  <script src="guide-detail.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
