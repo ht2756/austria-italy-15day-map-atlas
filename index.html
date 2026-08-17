@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2027年6月奥地利与意大利北部15日公共交通旅行地图册">
+  <title>奥地利 × 意大利北部｜15日旅行地图册</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="返回全程总览">
+      <span class="brand-mark">AT·IT</span>
+      <span>
+        <strong>奥地利 × 意大利北部</strong>
+        <small>2027.06.05—06.19 · 3人 · 公共交通</small>
+      </span>
+    </a>
+    <div class="top-actions">
+      <span class="edition">ROUTE ATLAS · 01</span>
+      <button class="icon-button" id="print-button" type="button" title="打印或另存为 PDF" aria-label="打印或另存为 PDF">
+        <i data-lucide="printer" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="overview-band" id="overview">
+      <div class="overview-heading">
+        <div>
+          <p class="eyebrow">THE ALPINE ARC · 15 DAYS</p>
+          <h1>维也纳至米兰：穿过湖区、山口与多洛米蒂</h1>
+        </div>
+        <div class="overview-key">
+          <span><b>7</b> 住宿基地</span>
+          <span><b>6</b> 跨城移动日</span>
+          <span><b>3</b> 天气机动组</span>
+        </div>
+      </div>
+
+      <div class="route-ribbon" aria-label="全程主线">
+        <span>北京</span><i data-lucide="plane" aria-hidden="true"></i>
+        <span>维也纳</span><i data-lucide="train-front" aria-hidden="true"></i>
+        <span>萨尔茨堡</span><i data-lucide="waves" aria-hidden="true"></i>
+        <span>湖区</span><i data-lucide="train-front" aria-hidden="true"></i>
+        <span>因斯布鲁克</span><i data-lucide="train-front" aria-hidden="true"></i>
+        <span>博尔扎诺</span><i data-lucide="mountain-snow" aria-hidden="true"></i>
+        <span>奥蒂塞伊</span><i data-lucide="train-front" aria-hidden="true"></i>
+        <span>米兰</span>
+      </div>
+
+      <div class="overview-map-shell map-shell">
+        <div id="overview-map" class="map" role="img" aria-label="奥地利与意大利北部15日旅行总览地图"></div>
+        <div class="map-corner-note">
+          <strong>欧洲段总览</strong>
+          <span>北京往返航段不纳入缩放范围</span>
+        </div>
+      </div>
+
+      <div class="map-legend map-legend-overview" aria-label="交通方式图例">
+        <span><i class="line-swatch rail"></i>铁路</span>
+        <span><i class="line-swatch bus"></i>公交</span>
+        <span><i class="line-swatch boat"></i>船</span>
+        <span><i class="line-swatch cable"></i>缆车 / 齿轨</span>
+        <span><i class="line-swatch walk"></i>步行</span>
+        <span><i class="line-swatch flight"></i>机场线</span>
+      </div>
+    </section>
+
+    <section class="atlas-band" id="daily-atlas">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DAY BY DAY</p>
+          <h2>每日地图册</h2>
+        </div>
+        <p>主线程保证旅程完整；顺路路线只在体力、天气和交通余量允许时加入。</p>
+      </div>
+
+      <div class="atlas-layout">
+        <nav class="day-rail" id="day-rail" aria-label="选择旅行日期"></nav>
+
+        <article class="day-view" aria-live="polite">
+          <header class="day-header">
+            <div>
+              <p class="day-kicker" id="day-kicker"></p>
+              <h3 id="day-title"></h3>
+              <p class="day-subtitle" id="day-subtitle"></p>
+            </div>
+            <div class="day-meta" id="day-meta"></div>
+          </header>
+
+          <div class="map-toolbar">
+            <div class="segmented" id="focus-control" aria-label="地图焦点">
+              <button type="button" data-focus="play" aria-pressed="true">游玩区域</button>
+              <button type="button" data-focus="journey" aria-pressed="false">全天交通</button>
+            </div>
+            <div class="map-stepper">
+              <button class="icon-button" id="prev-day" type="button" title="前一天" aria-label="前一天">
+                <i data-lucide="chevron-left" aria-hidden="true"></i>
+              </button>
+              <span id="day-counter">01 / 15</span>
+              <button class="icon-button" id="next-day" type="button" title="后一天" aria-label="后一天">
+                <i data-lucide="chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="daily-map-shell map-shell">
+            <div id="daily-map" class="map" role="img" aria-label="每日景点和交通线路地图"></div>
+            <div class="layer-switches" id="layer-switches" aria-label="地图图层"></div>
+          </div>
+
+          <div class="day-content">
+            <section class="route-panel" aria-labelledby="route-heading">
+              <div class="panel-heading">
+                <p class="eyebrow">ROUTE ORDER</p>
+                <h4 id="route-heading">当日动线</h4>
+              </div>
+              <ol class="stop-list" id="stop-list"></ol>
+            </section>
+
+            <aside class="decision-panel" aria-labelledby="decision-heading">
+              <div class="panel-heading">
+                <p class="eyebrow">DECISION NOTES</p>
+                <h4 id="decision-heading">当日取舍</h4>
+              </div>
+              <p class="day-summary" id="day-summary"></p>
+              <dl class="decision-list" id="decision-list"></dl>
+              <div class="source-row" id="source-row"></div>
+            </aside>
+          </div>
+
+          <section class="guide-brief" id="guide-brief" aria-labelledby="guide-heading">
+            <header class="guide-heading">
+              <div>
+                <p class="eyebrow">LOCAL GUIDE BRIEFING</p>
+                <h4 id="guide-heading">专业导游解说</h4>
+              </div>
+              <p class="guide-theme" id="guide-theme"></p>
+            </header>
+            <blockquote class="guide-script" id="guide-script"></blockquote>
+            <div class="guide-lenses">
+              <article class="guide-lens">
+                <span>01 · SIGHTS</span>
+                <h5>景点怎么看</h5>
+                <p id="guide-sights"></p>
+              </article>
+              <article class="guide-lens">
+                <span>02 · FOOD</span>
+                <h5>当天吃什么</h5>
+                <p id="guide-food"></p>
+              </article>
+              <article class="guide-lens">
+                <span>03 · CULTURE</span>
+                <h5>人文怎么懂</h5>
+                <p id="guide-culture"></p>
+              </article>
+            </div>
+            <div class="guide-field-note">
+              <span>现场讲法</span>
+              <p id="guide-field-note"></p>
+            </div>
+            <div class="guide-source-row" id="guide-sources"></div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section class="framework-band" id="framework">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">HOW THE ROUTE WORKS</p>
+          <h2>四层旅行结构</h2>
+        </div>
+      </div>
+      <div class="framework-grid">
+        <div class="framework-item main-thread">
+          <span>01</span>
+          <h3>主线程</h3>
+          <p>决定这趟旅行成立的城市、山景和跨城线路，优先级最高。</p>
+        </div>
+        <div class="framework-item side-thread">
+          <span>02</span>
+          <h3>顺路补充</h3>
+          <p>与主线同方向、几乎不增加折返的街区、观景点和当地体验。</p>
+        </div>
+        <div class="framework-item weather-thread">
+          <span>03</span>
+          <h3>天气替代</h3>
+          <p>山顶进云、强风或雷暴时启用，以博物馆、老城与低海拔路线替代。</p>
+        </div>
+        <div class="framework-item constraint-thread">
+          <span>04</span>
+          <h3>限制条件</h3>
+          <p>周日市场、周一闭馆、末班缆车和季初未开放设施，直接标在当天。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="verification-band" id="verification">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">2027 CHECKPOINTS</p>
+          <h2>出发前复核</h2>
+        </div>
+      </div>
+      <div class="verification-list">
+        <div><time>订房时</time><p>优先锁定奥蒂塞伊、圣沃尔夫冈与米兰可取消住宿；米兰入住日恰逢男装周开幕。</p></div>
+        <div><time>提前 3–6 月</time><p>核对国际航班机场、跨城火车售票期和大教堂、美泉宫等定时门票。</p></div>
+        <div><time>提前 7–14 天</time><p>下载ÖBB、Südtirolmobil等正式时刻；确认公交、船、缆车与铁路施工信息。</p></div>
+        <div><time>提前 72–24 小时</time><p>按山地天气重排沙夫山、Nordkette、Seceda、Alpe di Siusi与Resciesa。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>线路为旅行逻辑示意，不替代2027年实时导航、官方时刻表或山地安全判断。</p>
+    <p>Basemap © OpenStreetMap contributors · 编制日期 2026-08-17</p>
+  </footer>
+
+  <noscript>本地图册需要启用 JavaScript 才能显示交互地图。</noscript>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="atlas-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
