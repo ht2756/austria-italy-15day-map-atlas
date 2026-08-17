@@ -70,11 +70,11 @@
     sources: document.getElementById("source-row"),
     guide: document.getElementById("guide-brief"),
     guideTheme: document.getElementById("guide-theme"),
+    guideRuntime: document.getElementById("guide-runtime"),
     guideScript: document.getElementById("guide-script"),
-    guideSights: document.getElementById("guide-sights"),
-    guideFood: document.getElementById("guide-food"),
-    guideCulture: document.getElementById("guide-culture"),
-    guideFieldNote: document.getElementById("guide-field-note"),
+    guideChapters: document.getElementById("guide-chapters"),
+    guideFieldNotes: document.getElementById("guide-field-notes"),
+    guideClosing: document.getElementById("guide-closing"),
     guideSources: document.getElementById("guide-sources"),
     layers: document.getElementById("layer-switches"),
     prev: document.getElementById("prev-day"),
@@ -343,6 +343,30 @@
     }).join("");
   }
 
+  function escapeMarkup(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    })[character]);
+  }
+
+  function renderGuideParagraphs(value) {
+    const paragraphs = Array.isArray(value) ? value : [value];
+    return paragraphs.filter(Boolean).map((paragraph) => `<p>${escapeMarkup(paragraph)}</p>`).join("");
+  }
+
+  function guideSections(guide) {
+    if (guide.sections?.length) return guide.sections;
+    return [
+      { code: "01", label: "SIGHTS", title: "景点怎么看", items: [{ title: "核心观察", body: guide.sights }] },
+      { code: "02", label: "FOOD", title: "当天吃什么", items: [{ title: "餐桌提示", body: guide.food }] },
+      { code: "03", label: "CULTURE", title: "人文怎么懂", items: [{ title: "地方文化", body: guide.culture }] }
+    ];
+  }
+
   function renderDayContent(day) {
     const guide = data.guides?.[day.id];
     elements.kicker.textContent = `DAY ${String(day.id).padStart(2, "0")} · ${day.date} · ${day.weekday}`;
@@ -364,13 +388,29 @@
     elements.guide.hidden = !guide;
     if (guide) {
       elements.guideTheme.textContent = guide.theme;
-      elements.guideScript.textContent = guide.script;
-      elements.guideSights.textContent = guide.sights;
-      elements.guideFood.textContent = guide.food;
-      elements.guideCulture.textContent = guide.culture;
-      elements.guideFieldNote.textContent = guide.fieldNote;
+      elements.guideRuntime.textContent = guide.runtime || "建议讲解 8–10 分钟";
+      elements.guideScript.innerHTML = renderGuideParagraphs(guide.script);
+      elements.guideChapters.innerHTML = guideSections(guide).map((section) => `
+        <article class="guide-chapter">
+          <header>
+            <span>${escapeMarkup(section.code)} · ${escapeMarkup(section.label)}</span>
+            <h5>${escapeMarkup(section.title)}</h5>
+          </header>
+          <div class="guide-topic-list">
+            ${section.items.filter((item) => item.body).map((item) => `
+              <section class="guide-topic">
+                <h6>${escapeMarkup(item.title)}</h6>
+                ${renderGuideParagraphs(item.body)}
+              </section>
+            `).join("")}
+          </div>
+        </article>
+      `).join("");
+      const fieldNotes = guide.fieldNotes || [guide.fieldNote];
+      elements.guideFieldNotes.innerHTML = fieldNotes.filter(Boolean).map((note) => `<li>${escapeMarkup(note)}</li>`).join("");
+      elements.guideClosing.textContent = guide.closing || guide.fieldNote;
       elements.guideSources.innerHTML = guide.sources.map((source) => `
-        <a href="${source.url}" target="_blank" rel="noopener">${source.label}</a>
+        <a href="${escapeMarkup(source.url)}" target="_blank" rel="noopener">${escapeMarkup(source.label)}</a>
       `).join("");
     }
     renderStopList(day);
